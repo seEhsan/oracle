@@ -1,0 +1,23 @@
+ --select   trunc(sysdate)- TO_DATE('10/10/2022', 'DD/MM/YYYY') from dual
+ 
+ 
+  CREATE OR REPLACE FUNCTION get_sal1
+             (v_id  IN NUMBER,fromdate varchar)
+             RETURN NUMBER
+         as
+             m_salary  NUMBER :=0;
+              dailysal NUMBER:=0;
+              dayscount NUMBER:=0;
+           
+          BEGIN  
+          select (sal/365) into dailysal  from hr_main.emp where empno =v_id ;
+          select   trunc(sysdate)- TO_DATE(fromdate, 'DD/MM/YYYY') into dayscount from dual ;
+          m_salary :=  dailysal *dayscount;
+              
+              
+               RETURN (m_salary);
+         END get_sal1;
+         /
+ 
+ select get_sal1(1,'10/10/2022' ) from dual
+ 
